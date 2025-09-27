@@ -27,6 +27,7 @@ jobs:
       packages: write
       attestations: write
       id-token: write
+      security-events: write
 
     steps:
       - name: Checkout repository
@@ -94,6 +95,15 @@ jobs:
         if: ${{ github.event_name != 'pull_request' }}
         with:
           sarif_file: 'trivy-results.sarif'
+        continue-on-error: true
+
+      - name: Upload security scan report as artifact
+        uses: actions/upload-artifact@v4
+        if: ${{ github.event_name != 'pull_request' }}
+        with:
+          name: trivy-security-report
+          path: trivy-results.sarif
+          retention-days: 30
 
   test-deployment:
     needs: build
