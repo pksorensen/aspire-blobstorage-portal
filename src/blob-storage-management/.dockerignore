@@ -1,0 +1,92 @@
+# Dockerfile and dockerignore
+Dockerfile*
+.dockerignore
+
+# Git
+.git
+.gitignore
+
+# Node.js
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Next.js
+.next/
+out/
+dist/
+build/
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+
+# Environment files
+.env*
+!.env.example
+
+# Cache and logs
+.turbo
+.cache
+.temp
+.tmp
+*.log
+logs
+
+# Test files and coverage
+test-results/
+test-results-*
+coverage/
+.nyc_output
+*.lcov
+
+# Playwright
+playwright-report/
+playwright/.cache/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Documentation and misc
+*.md
+!README.md
+*.txt
+!package.json
+!yarn.lock
+!package-lock.json
+!pnpm-lock.yaml
+
+# Development specific
+dev.log
+start.log
+*.local
+
+# Reports and analysis
+build-status-report.md
+test-status-report*.json
+lighthouse-report*
+performance-*
+
+# Design assets (if not needed in production)
+design/
+
+# Temporary files
+test-results/
+status.json

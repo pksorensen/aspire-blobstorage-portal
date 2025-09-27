@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'src/blob-storage-management/**'
+      - '.github/workflows/ci.yml'
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: src/blob-storage-management/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd src/blob-storage-management
+          npm ci
+
+      - name: Run linting
+        run: |
+          cd src/blob-storage-management
+          npm run lint
+
+      - name: Run type checking
+        run: |
+          cd src/blob-storage-management
+          npm run type-check
+
+      - name: Build application
+        run: |
+          cd src/blob-storage-management
+          npm run build
+
+      - name: Install Playwright browsers
+        run: |
+          cd src/blob-storage-management
+          npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: |
+          cd src/blob-storage-management
+          npm run test
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: src/blob-storage-management/playwright-report/
+          retention-days: 30
+
+  security-scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: './src/blob-storage-management'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'

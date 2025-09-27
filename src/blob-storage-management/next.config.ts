@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Enable standalone output for optimal Docker deployment
+  output: "standalone",
+
   // Bundle analyzer for development
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     // Bundle analysis in development
