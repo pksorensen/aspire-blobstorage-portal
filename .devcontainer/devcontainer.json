@@ -1,0 +1,75 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
+{
+	"name": ".NET Aspire",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	//"image": "mcr.microsoft.com/devcontainers/dotnet:9.0-bookworm",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": {
+			"TZ": "${localEnv:TZ:Europe/Copenhagen}"
+		}
+	},
+	"runArgs": [
+		"--tty",
+		"--interactive",
+		"--env-file",
+		".devcontainer/.env"
+	],
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
+		"ghcr.io/devcontainers/features/powershell:1": {},
+	},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [5000, 5001],
+	// "portsAttributes": {
+	//		"5001": {
+	//			"protocol": "https"
+	//		}
+	// }
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "dotnet restore",
+	"onCreateCommand": "curl -sSL https://aspire.dev/install.sh | bash",
+	"postStartCommand": "dotnet dev-certs https --trust",
+	//"postCreateCommand": "whoami && chown -R vscode:vscode /home/vscode/.claude || true",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-dotnettools.csdevkit",
+				"ms-dotnettools.csharp",
+				"GitHub.copilot-chat",
+				"GitHub.copilot",
+				"anthropic.claude-code",
+				"saoudrizwan.claude-dev"
+			],
+			"settings": {
+				"editor.formatOnSave": true,
+				"editor.defaultFormatter": "esbenp.prettier-vscode",
+				"editor.codeActionsOnSave": {
+					"source.fixAll.eslint": "explicit"
+				}
+			}
+		}
+	},
+	// Configure tool-specific properties.
+	// "customizations": {},
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+	"containerUser": "root",
+	"remoteUser": "vscode",
+	"mounts": [
+		"source=claude-code-bashhistory,target=/commandhistory,type=volume",
+		"source=claude-code-config-v2,target=/home/vscode/.claude,type=volume",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached",
+		"source=playwright-browsers,target=/home/vscode/.playwright,type=volume"
+	],
+	"remoteEnv": {
+		"CLAUDE_CONFIG_DIR": "/home/vscode/.claude",
+		"NODE_OPTIONS": "--max-old-space-size=4096",
+		"PLAYWRIGHT_BROWSERS_PATH": "/home/vscode/.playwright",
+		"HISTFILE": "/commandhistory/.bash_history",
+		"TERM": "xterm-256color",
+		"COLORTERM": "truecolor",
+		"FORCE_COLOR": "3"
+	}
+}

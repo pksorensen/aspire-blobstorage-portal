@@ -1,0 +1,30 @@
+{
+  "swarm_id": "20250831_125843_azure_storage_explorer",
+  "objective": "Build a comprehensive Azure Storage Explorer-style web application in existing Next.js 15 project (src/blob-storage-management) with 100% React Server Components architecture and zero API routes",
+  "status": "planned",
+  "created_at": "2025-08-31T12:58:43Z",
+  "phases": 8,
+  "agents": 15,
+  "feedback_addressed": 0,
+  "iteration": 1,
+  "architecture": "RSC + Server Actions (Zero API Routes)",
+  "technology_stack": [
+    "Next.js 15.5.2",
+    "React 19.1.0", 
+    "TypeScript 5",
+    "Azure Storage Blob SDK",
+    "shadcn/ui (New York style)",
+    "Tailwind CSS v4",
+    "Playwright testing"
+  ],
+  "key_features": [
+    "Dashboard with live storage metrics",
+    "Container management (CRUD operations)",
+    "Blob management with upload/download", 
+    "Advanced blob features (metadata, access tiers)",
+    "Search and filtering",
+    "Favorites and recently viewed",
+    "Responsive sidebar navigation",
+    "Comprehensive test suite"
+  ]
+}

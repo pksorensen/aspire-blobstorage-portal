@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Production builds
+.next/
+dist/
+build/
+
+# Environment files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+*.log
+
+# Test results
+test-results/
+playwright-report/
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

@@ -1,0 +1,96 @@
+{
+  "test_execution_status": "FAILURES_DETECTED",
+  "test_commands_used": [
+    "npm test",
+    "npm run test:happy-path", 
+    "playwright test --grep @happy-path"
+  ],
+  "total_tests_attempted": 42,
+  "test_categories": {
+    "happy_path": {
+      "attempted": 42,
+      "passed": 0, 
+      "failed": 42,
+      "status": "ALL_FAILED"
+    },
+    "extended_happy_path": "NOT_RUN",
+    "not_so_happy_path": "NOT_RUN", 
+    "performance": "NOT_RUN"
+  },
+  "failure_summary": {
+    "primary_failure_types": [
+      "404_ROUTING_ERRORS",
+      "MISSING_TEST_IDS", 
+      "NEXT_JS_CONFIGURATION_ERRORS",
+      "AZURE_STORAGE_INITIALIZATION_FAILURES"
+    ],
+    "affected_test_suites": [
+      "dashboard.spec.ts",
+      "blobs.spec.ts", 
+      "containers.spec.ts",
+      "accessibility.spec.ts"
+    ],
+    "critical_issues": [
+      "All tests result in 404 page not found errors",
+      "Next.js app failing to serve pages properly",
+      "Azure Storage service initialization failing", 
+      "Missing data-testid attributes causing element selection failures",
+      "Next.js 15 configuration warnings and compatibility issues"
+    ]
+  },
+  "detailed_failure_analysis": {
+    "routing_failures": {
+      "description": "All tests show 404 'This page could not be found' errors",
+      "evidence": "Page snapshots show generic 404 heading elements instead of expected application content",
+      "impact": "Complete application unavailable for testing"
+    },
+    "next_js_config_issues": {
+      "warnings": [
+        "Invalid next.config.ts options detected: serverComponentsExternalPackages",
+        "Webpack configured while Turbopack not configured",
+        "Event handlers cannot be passed to Client Component props"
+      ],
+      "description": "Configuration incompatibilities between Next.js 15 and current setup"
+    },
+    "azure_storage_errors": {
+      "error": "Cannot read properties of undefined (reading 'getBlobServiceClient')",
+      "location": "lib/azure-storage.ts:211:17",
+      "description": "Azure Storage service failing to initialize properly",
+      "impact": "Backend service unavailable for test data"
+    },
+    "test_selector_failures": {
+      "missing_elements": [
+        "sidebar-navigation",
+        "storage-metrics-card", 
+        "container-list",
+        "blob-list"
+      ],
+      "description": "Expected UI elements with data-testid attributes not found",
+      "cause": "Either elements don't exist due to routing failures or missing data-testid attributes"
+    }
+  },
+  "test_infrastructure_status": {
+    "playwright_installation": "SUCCESS",
+    "test_configuration": "VALID", 
+    "webserver_startup": "FAILING",
+    "mock_services": "PARTIALLY_WORKING"
+  },
+  "environment_details": {
+    "next_js_version": "15.5.2",
+    "playwright_version": "^1.49.0",
+    "test_framework": "Playwright with TDD structure",
+    "mock_services": "MockAzureStorageService implemented"
+  },
+  "recommendations": {
+    "immediate_fixes_needed": [
+      "Fix Next.js routing to resolve 404 errors",
+      "Update next.config.ts to be compatible with Next.js 15", 
+      "Fix Azure Storage service initialization",
+      "Add missing data-testid attributes to UI components"
+    ],
+    "priority": "CRITICAL - All tests failing due to application not serving correctly"
+  },
+  "coverage_information": "Unable to measure - application not serving pages",
+  "execution_timestamp": "2025-08-31T12:58:43Z",
+  "reporter_notes": "Complete test failure due to Next.js application serving 404 errors instead of expected pages. This appears to be a critical deployment/routing issue rather than test logic problems. The test infrastructure (Playwright, mocks, configurations) appears well-structured but cannot execute due to application unavailability."
+}
