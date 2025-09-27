@@ -22,6 +22,8 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      digest: ${{ steps.build.outputs.digest }}
     permissions:
       contents: read
       packages: write
@@ -111,14 +113,16 @@ jobs:
     if: ${{ github.event_name != 'pull_request' }}
     steps:
       - name: Test container deployment
+        env:
+          IMAGE_DIGEST: ${{ needs.build.outputs.digest }}
         run: |
-          # Pull the built image
-          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          # Pull the built image using digest
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ env.IMAGE_DIGEST }}
           
           # Run the container
           docker run -d --name test-container \
             -p 3000:3000 \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ env.IMAGE_DIGEST }}
           
           # Wait for container to be ready
           sleep 30
