@@ -94,6 +94,11 @@ async function ContainerSearchAndFilter({
  */
 function ContainerMetadata({ container }: { container: ContainerItem }) {
   const formatDate = (date: Date) => {
+    // Add validation for invalid dates
+    if (!date || isNaN(date.getTime())) {
+      return 'Unknown date';
+    }
+    
     return new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
       month: 'short',
